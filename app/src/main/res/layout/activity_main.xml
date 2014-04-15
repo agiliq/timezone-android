@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@android:color/black">
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/list_divider"
+        android:dividerHeight="0.7dp"
+        android:headerDividersEnabled="false"
+        android:focusableInTouchMode="true"
+        android:layout_marginBottom="60dp"
+        android:footerDividersEnabled="true"
+        android:layout_alignParentTop="true" >
+    </ListView>
+
+
+    <com.google.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="a150818998a945a"
+        ads:loadAdOnCreate="true" />
+
+
+</RelativeLayout>

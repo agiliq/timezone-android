@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_add_time_zone"
+        android:title="@string/menu_add_time_zone"
+        android:icon="@drawable/add_time_zone"
+        android:orderInCategory="100"
+        android:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_help"
+        android:title="@string/menu_help"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+    <item
+        android:id="@+id/refresh_time_zone"
+        android:title="@string/refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom" />
+<!--    <item
+        android:id="@+id/more_apps"
+        android:title="@string/more_apps"
+        android:showAsAction="never" />-->
+
+
+</menu>
