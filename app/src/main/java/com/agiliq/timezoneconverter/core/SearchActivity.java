@@ -28,10 +28,10 @@ import java.util.Vector;
 
 public class SearchActivity extends ListActivity {
 
-	static final String TAG = "SearchActivity";
-	static ListSearchAdapter listViewSearchAdapter;
-	TimeZoneImpl timeZoneImpl;
-	Context context;
+    static final String TAG = "SearchActivity";
+    static ListSearchAdapter listViewSearchAdapter;
+    TimeZoneImpl timeZoneImpl;
+    Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,58 +47,55 @@ public class SearchActivity extends ListActivity {
         //List view on Touch listener
         getListView().setOnTouchListener(new OnTouchListener() {
 
-        	public boolean onTouch(View v, MotionEvent event) {
-    			if(event.getAction() == MotionEvent.ACTION_DOWN)
-    			{
-    				hideSoftKeyboard();
-    			}else if(event.getAction() == MotionEvent.ACTION_UP){}
-    			else if (event.getAction() == MotionEvent.ACTION_CANCEL){}
-    			return false;
-    		}
-		});
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    hideSoftKeyboard();
+                }
+                return false;
+            }
+        });
 
         //listView on Click listener
         getListView().setOnItemClickListener(new OnItemClickListener() {
 
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
 
-				int tempZone = MainActivity.listViewAdapter.getPosition(listViewSearchAdapter.getItem(position));
-				if(tempZone == -1)
-				{
-					MainActivity.listViewAdapter.add(listViewSearchAdapter.getItem(position));
-					MainActivity.updatePreference();
-					finish();
-				}
-				else{
-					Toast.makeText(context, "City already exists", Toast.LENGTH_SHORT).show();
-				}
+                int tempZone = MainActivity.listViewAdapter.getPosition(listViewSearchAdapter.getItem(position));
+                if (tempZone == -1) {
+                    MainActivity.listViewAdapter.add(listViewSearchAdapter.getItem(position));
+                    MainActivity.updatePreference();
+                    finish();
+                } else {
+                    Toast.makeText(context, "City already exists", Toast.LENGTH_SHORT).show();
+                }
 
-			}
+            }
 
-		});
+        });
 
 
         //get data when change in textView
         TextWatcher watcher = new TextWatcher() {
 
-			@SuppressLint("DefaultLocale")
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if(s != null)
-				{
-					Vector<TimeZoneModel> result = timeZoneImpl.setZoneData(s.toString().toLowerCase(Locale.ENGLISH));
-					if(result != null){
-						listViewSearchAdapter = new ListSearchAdapter(context, 0, result);
-						setListAdapter(listViewSearchAdapter);
-					}
-				}
-			}
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-			}
-			public void afterTextChanged(Editable s) {
-			}
-		};
+            @SuppressLint("DefaultLocale")
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s != null) {
+                    Vector<TimeZoneModel> result = timeZoneImpl.setZoneData(s.toString().toLowerCase(Locale.ENGLISH));
+                    if (result != null) {
+                        listViewSearchAdapter = new ListSearchAdapter(context, 0, result);
+                        setListAdapter(listViewSearchAdapter);
+                    }
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        };
         textView.addTextChangedListener(watcher);
     }
 
@@ -149,8 +146,7 @@ public class SearchActivity extends ListActivity {
     }*/
 
     public void hideSoftKeyboard() {
-	    InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
-	    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-	}
-
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
 }

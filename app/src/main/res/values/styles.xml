@@ -1,28 +1,28 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="@android:style/Theme.Black" />
-    
+    <style name="AppTheme" parent="@style/Theme.AppCompat" />
+
     <style name="custom_list_view">
         <item name="android:paddingRight">5dp</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingBottom">5dp</item>
     </style>
-    
-    <style name="city_text_view" parent="@android:style/TextAppearance.Widget.TextView"></style>
-    
-    <style name="country_text_view"></style>
-        
-    <style name="time_linear_layout"></style>
-        
+
+    <style name="city_text_view" parent="@android:style/TextAppearance.Widget.TextView"/>
+
+    <style name="country_text_view"/>
+
+    <style name="time_linear_layout"/>
+
     <!-- A light Holo shade of blue -->
     <color name="holo_blue_light">#ff33b5e5</color>
     <color name="text_color">#fff</color>
-    
+
     <color name="list_item_day">#404049</color>
     <color name="list_item_night">#383940</color>
-    
+
     <color name="list_divider">#625f68</color>
-    
+
 
 </resources>

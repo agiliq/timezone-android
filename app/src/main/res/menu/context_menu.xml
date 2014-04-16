@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/deleteTimeZone" 
-        android:title="delete"/>
-    
+    <item android:id="@+id/deleteTimeZone"
+        android:title="@string/delete"/>
+
     <item android:id="@+id/editTimeZone"
-        android:title="edit time"/>
-    
+        android:title="@string/edit_time"/>
 </menu>

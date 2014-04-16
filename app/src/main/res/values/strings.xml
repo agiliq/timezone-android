@@ -4,7 +4,7 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_add_time_zone">Add Time Zone</string>
     <string name="menu_help">Help</string>
-    
+
     <string name="title_activity_main">Time Zone Converter</string>
     <string name="add">Add time zone</string>
     <string name="refresh">Refresh time</string>
@@ -14,22 +14,22 @@
     <string name="time_image">time image</string>
     <string name="empty_view">No Timezones to display. Please search and timezones</string>
     <string name="title_activity_help">Help</string>
-    
+
     <string name="text_current_zone">Local time zone</string>
     <string name="text_list_zones">Time zones</string>
     <string name="text_minute">30</string>
-    
+
     <string name="time_display">10:30</string>
     <string name="country">India</string>
     <string name="city">Hyderabad</string>
      <string name="date">10 Wed 2012</string>
-     
+
      <string name="select_city">Select City</string>
      <string name="deafult_city_value">Paris</string>
      <string name="button_ok_on_click">OK</string>
      <string name="ampm">AM</string>
-     
-     
+
+
     <string name="help">
         <b>Time Zone Convertor</b>\n\n
         <b>Add new time zone:</b>\n\n
@@ -49,5 +49,7 @@ What is the time in New York when it is 9:00 am in Paris?\n
 Click on a time zone to edit timezone.\n\n
 </string>
     <string name="more_apps">More Apps</string>
+    <string name="delete">delete</string>
+    <string name="edit_time">edit time</string>
 
 </resources>
