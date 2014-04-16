@@ -47,7 +47,7 @@ public class CustomClockLinear extends LinearLayout{
 
     CustomHolder customHolder;
 
-    private TimeZoneModel timeZoneModel;
+    private TimeZoneModel mTimeZoneModel;
 
     // called by system on minute ticks
     private final Handler mHandler = new Handler();
@@ -154,7 +154,7 @@ public class CustomClockLinear extends LinearLayout{
 
     public void setTimeZoneModel(TimeZoneModel timeZoneModel){
 
-    	this.timeZoneModel = timeZoneModel;
+    	this.mTimeZoneModel = timeZoneModel;
 
     	customHolder.city.setText(timeZoneModel.getCity());
     	customHolder.country.setText(timeZoneModel.getCountry());
@@ -192,11 +192,11 @@ public class CustomClockLinear extends LinearLayout{
         customHolder.mTimeDisplay.setText(newTime);
 
         customHolder.mAmPm.setShowAmPm(mFormat == m12);
-        timeZoneModel.setCalendar(mCalendar);
+        mTimeZoneModel.setCalendar(mCalendar);
         //mCalendar.getTime();
         customHolder.mAmPm.setIsMorning(mCalendar.get(Calendar.AM_PM) == 0);
 
-    	if(timeZoneModel.isMorning()){
+    	if(mTimeZoneModel.isMorning()){
     		customHolder.timeImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.sun));
     		this.setBackgroundColor(getResources().getColor(R.color.list_item_day));
 		}else{
@@ -204,7 +204,7 @@ public class CustomClockLinear extends LinearLayout{
 			this.setBackgroundColor(getResources().getColor(R.color.list_item_night));
 		}
     	java.text.DateFormat dF = SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM);
-    	dF.setTimeZone(TimeZone.getTimeZone(timeZoneModel.getTimeZoneId()));
+    	dF.setTimeZone(TimeZone.getTimeZone(mTimeZoneModel.getTimeZoneId()));
     	customHolder.date.setText(dF.format(mCalendar.getTime()));
     }
 
