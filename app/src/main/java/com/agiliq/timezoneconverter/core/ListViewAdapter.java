@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
@@ -24,30 +23,28 @@ import java.util.Vector;
 public class ListViewAdapter extends ArrayAdapter<TimeZoneModel> {
 
     final String TAG = "ListViewAdapter";
-    Vector<TimeZoneModel> zones;
+    Vector<TimeZoneModel> mZones;
 
-    CustomClockLinear selectedCustomClock;
+    CustomClockLinear mSelectedClock;
     int pos;
-    Context context;
-    int emptyId;
-    TimeZoneImpl timeZoneImpl;
-    Filter filter;
+    Context mContext;
+    TimeZoneImpl mTimeZoneImpl;
 
     static Map<TimeZoneModel, CustomClockLinear> customClocks = new HashMap<TimeZoneModel, CustomClockLinear>();
 
     public ListViewAdapter(Context context, int emptyId, Vector<TimeZoneModel> zones) {
         super(context, emptyId, zones);
-        this.context = context;
-        timeZoneImpl = new TimeZoneImpl(context);
-        this.zones = zones;
+        this.mContext = context;
+        this.mTimeZoneImpl = new TimeZoneImpl(context);
+        this.mZones = zones;
     }
 
     public int getCount() {
-        return zones.size();
+        return mZones.size();
     }
 
     public TimeZoneModel getItem(int position) {
-        return zones.elementAt(position);
+        return mZones.elementAt(position);
     }
 
     public long getItemId(int position) {
@@ -61,10 +58,10 @@ public class ListViewAdapter extends ArrayAdapter<TimeZoneModel> {
         pos = position;
 
         holder = new TimeZoneHolder();
-        holder.customClock = new CustomClockLinear(context);
+        holder.customClock = new CustomClockLinear(mContext);
 
         if (row == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.custom_clock_linear, null);
             holder.customClock = (CustomClockLinear) row.findViewById(R.id.customClockLinear);
             holder.customClock.setPadding(3, 2, 3, 2);
@@ -73,11 +70,11 @@ public class ListViewAdapter extends ArrayAdapter<TimeZoneModel> {
             holder = (TimeZoneHolder) row.getTag();
         }
 
-        holder.customClock.setTimeZoneModel(zones.elementAt(position));
+        holder.customClock.setTimeZoneModel(getItem(position));
         holder.customClock.customHolder.timeImage.setVisibility(View.VISIBLE);
 
         row.setOnTouchListener(new ListItemOnTouchListener());
-        customClocks.put(zones.elementAt(position), holder.customClock);
+        customClocks.put(getItem(position), holder.customClock);
 
         return row;
     }
@@ -87,17 +84,17 @@ public class ListViewAdapter extends ArrayAdapter<TimeZoneModel> {
         resetTime();
         CustomClockLinear editClock = customClocks.get(object);
 
-        if (selectedCustomClock == null) {
-            selectedCustomClock = editClock;
+        if (mSelectedClock == null) {
+            mSelectedClock = editClock;
         } else {
-            selectedCustomClock.customHolder.timeSwitcherBar.setVisibility(View.GONE);
-            selectedCustomClock = editClock;
+            mSelectedClock.customHolder.timeSwitcherBar.setVisibility(View.GONE);
+            mSelectedClock = editClock;
         }
 
-        selectedCustomClock.customHolder.timeSwitcherBar.setVisibility(View.VISIBLE);
-        selectedCustomClock.customHolder.timeSwitcherBar.setProgress(object.getCalendar().get(Calendar.HOUR_OF_DAY));
+        mSelectedClock.customHolder.timeSwitcherBar.setVisibility(View.VISIBLE);
+        mSelectedClock.customHolder.timeSwitcherBar.setProgress(object.getCalendar().get(Calendar.HOUR_OF_DAY));
 
-        selectedCustomClock.customHolder.timeSwitcherBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        mSelectedClock.customHolder.timeSwitcherBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
@@ -107,20 +104,19 @@ public class ListViewAdapter extends ArrayAdapter<TimeZoneModel> {
 
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-                updateTime(progress, selectedCustomClock, object);
+                updateTime(progress, mSelectedClock, object);
             }
         });
     }
 
     public void resetTime() {
-        for (TimeZoneModel zone : zones) {
+        for (TimeZoneModel zone : mZones) {
             try {
-                timeZoneImpl = new TimeZoneImpl(context);
+                mTimeZoneImpl = new TimeZoneImpl(mContext);
                 customClocks.get(zone).updateTime(Utils.getCalendar(zone.getTimeZoneId()), true);
                 customClocks.get(zone).customHolder.timeSwitcherBar.setVisibility(View.GONE);
             } catch (NullPointerException e) {
                 Log.d(TAG, "Reset Time Null");
-                continue;
             }
         }
     }
@@ -133,14 +129,13 @@ public class ListViewAdapter extends ArrayAdapter<TimeZoneModel> {
         calendar.getTime();
 
         long timeInMillis = calendar.getTimeInMillis();
-        for (TimeZoneModel zone : zones) {
+        for (TimeZoneModel zone : mZones) {
             try {
                 CustomClockLinear newClock = customClocks.get(zone);
                 zone.getCalendar().setTimeInMillis(timeInMillis);
                 newClock.updateTime(zone.getCalendar(), false);
             } catch (NullPointerException e) {
                 Log.d(TAG, "Update Time Null");
-                continue;
             }
         }
     }
@@ -154,7 +149,7 @@ public class ListViewAdapter extends ArrayAdapter<TimeZoneModel> {
 
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                v.setBackgroundColor(context.getResources().getColor(R.color.holo_blue_light));
+                v.setBackgroundColor(mContext.getResources().getColor(R.color.holo_blue_light));
             }
             return false;
         }

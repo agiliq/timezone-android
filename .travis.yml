@@ -17,5 +17,6 @@ before_script:
 
       # android-cq will be placed in build/reports dir
 script:
-  - ./gradlew clean
-  - ./gradlew build
+  - TERM=dumb ./gradlew clean --stacktrace
+  - TERM=dumb ./gradlew build --stacktrace
+  - TERM=dumb ./gradlew assemble --stacktrace

@@ -4,7 +4,6 @@ package com.agiliq.timezoneconverter.core;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -29,17 +28,15 @@ import java.util.Vector;
 
 public class SearchActivity extends ListActivity {
 
-    static ListSearchAdapter listViewSearchAdapter;
-    TimeZoneImpl timeZoneImpl;
-    Context context;
+    ListSearchAdapter mListViewSearchAdapter;
+    TimeZoneImpl mTimeZoneImpl;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        timeZoneImpl = new TimeZoneImpl(this);
-        context = this;
+        mTimeZoneImpl = new TimeZoneImpl(this);
 
         TextView textView = (TextView) findViewById(R.id.textViewSearch);
         getListView().setItemsCanFocus(true);
@@ -62,7 +59,7 @@ public class SearchActivity extends ListActivity {
                                     long id) {
 
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra(Utils.TIME_ZONE, listViewSearchAdapter.getItem(position));
+                resultIntent.putExtra(Utils.TIME_ZONE, mListViewSearchAdapter.getItem(position));
                 setResult(RESULT_OK, resultIntent);
                 finish();
 
@@ -77,10 +74,10 @@ public class SearchActivity extends ListActivity {
             @SuppressLint("DefaultLocale")
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s != null) {
-                    Vector<TimeZoneModel> result = timeZoneImpl.setZoneData(s.toString().toLowerCase(Locale.ENGLISH));
+                    Vector<TimeZoneModel> result = mTimeZoneImpl.setZoneData(s.toString().toLowerCase(Locale.ENGLISH));
                     if (result != null) {
-                        listViewSearchAdapter = new ListSearchAdapter(context, 0, result);
-                        setListAdapter(listViewSearchAdapter);
+                        mListViewSearchAdapter = new ListSearchAdapter(SearchActivity.this, 0, result);
+                        setListAdapter(mListViewSearchAdapter);
                     }
                 }
             }
