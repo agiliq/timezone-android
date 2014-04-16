@@ -1,4 +1,4 @@
-package com.agiliq.timezoneconverter.core;
+package com.agiliq.timezoneconverter.widget;
 
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -11,6 +11,7 @@ import android.text.format.DateFormat;
 import android.widget.RemoteViews;
 
 import com.agiliq.timezone.core.R;
+import com.agiliq.timezoneconverter.core.TimeZoneImpl;
 import com.agiliq.timezoneconverter.model.TimeZoneModel;
 
 import java.util.Calendar;
@@ -42,8 +43,7 @@ public class TimeZoneWidgetService extends Service {
 		this.appWidgetId = mAppWidgetId;
 		this.sAppWidgetManager = appWidgetManager;
 		this.timeZoneImpl = new TimeZoneImpl(context);
-		this.city = TimeZoneWidgetConfigure.loadCityPref(context,
-				this.appWidgetId);
+		this.city = TimeZoneWidgetConfigure.loadCityPref(this.appWidgetId);
 		if(this.city != null){
 			update = true;
 			this.timeZoneModel = timeZoneImpl.getSingleCity(this.city);

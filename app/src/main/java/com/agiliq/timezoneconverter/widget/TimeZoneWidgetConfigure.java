@@ -1,11 +1,10 @@
-package com.agiliq.timezoneconverter.core;
+package com.agiliq.timezoneconverter.widget;
 
 import android.app.ListActivity;
 import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,20 +14,18 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.agiliq.timezone.core.R;
+import com.agiliq.timezoneconverter.data.PreferencesManager;
+import com.agiliq.timezoneconverter.data.Utils;
 
 import java.util.ArrayList;
 
 public class TimeZoneWidgetConfigure extends ListActivity implements OnItemClickListener {
 
-	private String[] cityArray;
-	private String cities;
+	private String[] mCityArray;
+	private String mCities;
 
+	boolean isButtonClicked = false;
 
-	static final String TAG = "SelectCityActivty";
-
-	static boolean buttonClicked = false;
-
-    private static final String PREFS_NAME = "com.agiliq.timezone.core.SelectCityActivity";
     private static final String PREF_PREFIX_KEY = "prefix_";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
@@ -40,6 +37,7 @@ public class TimeZoneWidgetConfigure extends ListActivity implements OnItemClick
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+        PreferencesManager.initializeInstance(getApplicationContext());
 		super.onCreate(savedInstanceState);
 
 		setResult(RESULT_CANCELED);
@@ -53,14 +51,13 @@ public class TimeZoneWidgetConfigure extends ListActivity implements OnItemClick
 		            AppWidgetManager.INVALID_APPWIDGET_ID);
 		}
 
-		SharedPreferences prefs = getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
-		cities = prefs.getString(MainActivity.KEY_CITIES, null);
+		mCities = PreferencesManager.getInstance().getString(Utils.KEY_CITIES);
 
-		if(cities != null){
-			cityArray = cities.split(";");
+		if(mCities != null){
+			mCityArray = mCities.split(";");
 			setListAdapter(new ArrayAdapter<String>(this,
 					android.R.layout.simple_list_item_single_choice,
-					cityArray));
+					mCityArray));
 			getListView().setItemsCanFocus(false);
 			getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		}else{
@@ -76,29 +73,21 @@ public class TimeZoneWidgetConfigure extends ListActivity implements OnItemClick
 
 
     // Write the prefix to the SharedPreferences object for this widget
-    static void saveCityPref(Context context, int appWidgetId, String text) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
-        prefs.putString(PREF_PREFIX_KEY + appWidgetId, text);
-        prefs.commit();
+    static void saveCityPref(int appWidgetId, String text) {
+        PreferencesManager.getInstance().setString(PREF_PREFIX_KEY + appWidgetId, text);
     }
 
     // Read the prefix from the SharedPreferences object for this widget.
     // If there is no preference saved, get the default from a resource
-    static String loadCityPref(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        String prefix = prefs.getString(PREF_PREFIX_KEY + appWidgetId, null);
-        return prefix;
-
+    static String loadCityPref(int appWidgetId) {
+        return PreferencesManager.getInstance().getString(PREF_PREFIX_KEY + appWidgetId);
     }
 
-    static void deleteCityPref(Context context, int appWidgetId) {
-    	SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-    	if(prefs.contains(PREF_PREFIX_KEY + appWidgetId)){
-    		prefs.edit().remove(PREF_PREFIX_KEY + appWidgetId).commit();
-    	}
+    static void deleteCityPref(int appWidgetId) {
+        PreferencesManager.getInstance().remove(PREF_PREFIX_KEY + appWidgetId);
     }
 
-    static void loadAllCityPrefs(Context context, ArrayList<Integer> appWidgetIds,
+    static void loadAllCityPrefs(ArrayList<Integer> appWidgetIds,
             ArrayList<String> texts) {
     }
 
@@ -111,13 +100,13 @@ public class TimeZoneWidgetConfigure extends ListActivity implements OnItemClick
 		final Context context = TimeZoneWidgetConfigure.this;
 
 		if(selectedCity != null){
-			saveCityPref(context, mAppWidgetId, selectedCity);
+			saveCityPref(mAppWidgetId, selectedCity);
 			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
 			TimeZoneWidgetService t = new TimeZoneWidgetService(context, appWidgetManager, mAppWidgetId);
 			t.updateWidget();
 
-			buttonClicked = true;
+            isButtonClicked = true;
 
 			Intent resultValue = new Intent();
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
@@ -131,7 +120,7 @@ public class TimeZoneWidgetConfigure extends ListActivity implements OnItemClick
 
 	@Override
 	protected void onPause() {
-		if(!buttonClicked){
+		if(!isButtonClicked){
 			AppWidgetHost host = new AppWidgetHost(TimeZoneWidgetConfigure.this, 1);
 			host.deleteAppWidgetId(mAppWidgetId);
 		}

@@ -1,4 +1,4 @@
-package com.agiliq.timezoneconverter.core;
+package com.agiliq.timezoneconverter.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -20,7 +20,7 @@ public class TimeZoneWidgetProvider extends AppWidgetProvider {
 		super.onDeleted(context, appWidgetIds);
 		final int N = appWidgetIds.length;
 		for (int i = 0; i < N; i++) {
-			TimeZoneWidgetConfigure.deleteCityPref(context, appWidgetIds[i]);
+			TimeZoneWidgetConfigure.deleteCityPref(appWidgetIds[i]);
 		}
 	}
 

@@ -1,4 +1,4 @@
-package com.agiliq.timezoneconverter.model;
+package com.agiliq.timezoneconverter.data;
 
 import android.content.Context;
 import android.database.SQLException;

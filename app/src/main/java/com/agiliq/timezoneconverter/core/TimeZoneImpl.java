@@ -2,7 +2,7 @@ package com.agiliq.timezoneconverter.core;
 
 import android.content.Context;
 
-import com.agiliq.timezoneconverter.model.DataBaseAccess;
+import com.agiliq.timezoneconverter.data.DataBaseAccess;
 import com.agiliq.timezoneconverter.model.TimeZoneModel;
 
 import java.util.Vector;

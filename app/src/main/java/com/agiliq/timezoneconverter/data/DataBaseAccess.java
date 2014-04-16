@@ -1,8 +1,11 @@
-package com.agiliq.timezoneconverter.model;
+package com.agiliq.timezoneconverter.data;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.agiliq.timezoneconverter.model.City;
+import com.agiliq.timezoneconverter.model.TimeZoneModel;
 
 import java.util.HashSet;
 import java.util.Vector;

@@ -4,7 +4,7 @@
   android:minWidth="110dp"
   android:minHeight="40dp"
   android:updatePeriodMillis="1800000"
-  android:configure="com.agiliq.timezoneconverter.core.TimeZoneWidgetConfigure"
+  android:configure="com.agiliq.timezoneconverter.widget.TimeZoneWidgetConfigure"
   android:initialLayout="@layout/custom_clock_item_widget"
   android:previewImage="@drawable/widget_preview">
 </appwidget-provider>

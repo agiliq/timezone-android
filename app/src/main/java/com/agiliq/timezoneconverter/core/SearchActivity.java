@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.Editable;
@@ -18,9 +19,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.agiliq.timezone.core.R;
+import com.agiliq.timezoneconverter.data.Utils;
 import com.agiliq.timezoneconverter.model.TimeZoneModel;
 
 import java.util.Locale;
@@ -28,7 +29,6 @@ import java.util.Vector;
 
 public class SearchActivity extends ListActivity {
 
-    static final String TAG = "SearchActivity";
     static ListSearchAdapter listViewSearchAdapter;
     TimeZoneImpl timeZoneImpl;
     Context context;
@@ -61,14 +61,10 @@ public class SearchActivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
 
-                int tempZone = MainActivity.listViewAdapter.getPosition(listViewSearchAdapter.getItem(position));
-                if (tempZone == -1) {
-                    MainActivity.listViewAdapter.add(listViewSearchAdapter.getItem(position));
-                    MainActivity.updatePreference();
-                    finish();
-                } else {
-                    Toast.makeText(context, "City already exists", Toast.LENGTH_SHORT).show();
-                }
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(Utils.TIME_ZONE, listViewSearchAdapter.getItem(position));
+                setResult(RESULT_OK, resultIntent);
+                finish();
 
             }
 

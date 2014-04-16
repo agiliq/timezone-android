@@ -44,7 +44,7 @@
           android:label="More Apps">
 		</activity>-->
 
-       <activity android:name="com.agiliq.timezoneconverter.core.TimeZoneWidgetConfigure"
+       <activity android:name="com.agiliq.timezoneconverter.widget.TimeZoneWidgetConfigure"
             android:enabled="true"
             android:theme="@android:style/Theme.Dialog"
             android:label="@string/select_city"
@@ -54,7 +54,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.agiliq.timezoneconverter.core.TimeZoneWidgetProvider">
+        <receiver android:name="com.agiliq.timezoneconverter.widget.TimeZoneWidgetProvider">
             <intent-filter >
                 <action
                     android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -65,7 +65,7 @@
         </receiver>
 
         <service android:enabled="true"
-            android:name="com.agiliq.timezoneconverter.core.TimeZoneWidgetService">
+            android:name="com.agiliq.timezoneconverter.widget.TimeZoneWidgetService">
         </service>
 
 
