@@ -241,11 +241,6 @@ public class MainActivity extends ActionBarListActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     protected void onPause() {
         updatePreference();
         super.onPause();
