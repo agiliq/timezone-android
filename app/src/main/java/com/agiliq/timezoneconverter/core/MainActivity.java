@@ -3,14 +3,12 @@ package com.agiliq.timezoneconverter.core;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -32,21 +30,17 @@ import com.google.ads.AdView;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
 import java.util.Vector;
 
 public class MainActivity extends ActionBarListActivity {
 
-    public static Map<String, Typeface> fonts = new HashMap<String, Typeface>();
-
     private final String CURRENT_LOCATION = "current_city";
     private String mCurrentLocation;
     TimeZoneImpl mTimeZoneImpl;
     ListViewAdapter mListViewAdapter;
-    AdView adView;
+    AdView mAdView;
 
     String mDefaultCities = "New York, NY;" + "Sydney;" + "Paris;";
     String mCities = mDefaultCities;
@@ -67,6 +61,8 @@ public class MainActivity extends ActionBarListActivity {
         if (PreferencesManager.getInstance().getString(Utils.KEY_CITIES) == null) {
             PreferencesManager.getInstance().setString(Utils.KEY_CITIES, mDefaultCities);
         }
+
+        mAdView = (AdView) findViewById(R.id.adView);
 
         getListView().setItemsCanFocus(true);
 
@@ -93,13 +89,8 @@ public class MainActivity extends ActionBarListActivity {
 
         });
 
-        getTimeZoneData();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         mCities = PreferencesManager.getInstance().getString(Utils.KEY_CITIES);
+        getTimeZoneData();
     }
 
     @Override
@@ -159,8 +150,7 @@ public class MainActivity extends ActionBarListActivity {
      */
     public void getTimeZoneData() {
         mTimeZoneImpl = new TimeZoneImpl(this);
-        Vector<TimeZoneModel> zones = new Vector<TimeZoneModel>();
-        zones = mTimeZoneImpl.setDefaultCities(mCities);
+        Vector<TimeZoneModel> zones = mTimeZoneImpl.setDefaultCities(mCities);
         zones.add(0, useLocation());
 
         mListViewAdapter = new ListViewAdapter(this, 0, zones);
@@ -199,8 +189,6 @@ public class MainActivity extends ActionBarListActivity {
             }
 
         } catch (IOException e) {
-            Log.d("GeoCoder", "Error getting location.");
-
             String city = PreferencesManager.getInstance().getString(CURRENT_LOCATION);
             if (mTimeZoneImpl.getSingleCity(city) != null) {
                 timeZoneModel = mTimeZoneImpl.getSingleCity(city);
@@ -254,6 +242,7 @@ public class MainActivity extends ActionBarListActivity {
                 }
             }
         }
+        mCities = newPreference;
         PreferencesManager.getInstance().setString(Utils.KEY_CITIES, newPreference);
     }
 
@@ -266,8 +255,10 @@ public class MainActivity extends ActionBarListActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        adView.stopLoading();
-        adView.destroy();
+        if (mAdView != null) {
+            mAdView.stopLoading();
+            mAdView.destroy();
+        }
     }
 
     @Override

@@ -15,7 +15,6 @@ public class HelpActivity extends Activity {
         setContentView(R.layout.activity_help);
 
         TextView textView = (TextView) findViewById(R.id.helpText);
-        textView.setTypeface(MainActivity.fonts.get("Roboto-Regular"));
     }
 
     @Override
