@@ -3,21 +3,22 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@android:color/black">
+    android:background="@color/gray">
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/list_divider"
-        android:dividerHeight="0.7dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="4dp"
         android:headerDividersEnabled="false"
         android:focusableInTouchMode="true"
         android:layout_marginBottom="60dp"
         android:footerDividersEnabled="true"
+        android:layout_margin="4dp"
+        android:listSelector="@drawable/list_selector"
         android:layout_alignParentTop="true" >
     </ListView>
-
 
     <com.google.ads.AdView
         android:id="@+id/adView"
@@ -27,6 +28,5 @@
         ads:adSize="BANNER"
         ads:adUnitId="a150818998a945a"
         ads:loadAdOnCreate="true" />
-
 
 </RelativeLayout>

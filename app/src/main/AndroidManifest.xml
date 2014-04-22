@@ -68,8 +68,6 @@
             android:name="com.agiliq.timezoneconverter.widget.TimeZoneWidgetService">
         </service>
 
-
-
     </application>
 
 </manifest>

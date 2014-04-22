@@ -1,6 +1,12 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="@style/Theme.AppCompat" />
+    <style name="AppTheme" parent="@style/Theme.AppCompat" >
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
+    </style>
+
+    <style name="ActionBarStyle" parent="Widget.AppCompat.Base.ActionBar">
+        <item name="android:background">@color/gray</item>
+    </style>
 
     <style name="custom_list_view">
         <item name="android:paddingRight">5dp</item>

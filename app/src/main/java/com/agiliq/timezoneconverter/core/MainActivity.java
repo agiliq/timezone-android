@@ -1,6 +1,5 @@
 package com.agiliq.timezoneconverter.core;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
@@ -18,7 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Toast;
 
 import com.agiliq.timezone.core.R;
@@ -56,6 +54,7 @@ public class MainActivity extends ActionBarListActivity {
         PreferencesManager.initializeInstance(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("");
         registerForContextMenu(getListView());
 
         if (PreferencesManager.getInstance().getString(Utils.KEY_CITIES) == null) {
@@ -63,30 +62,12 @@ public class MainActivity extends ActionBarListActivity {
         }
 
         mAdView = (AdView) findViewById(R.id.adView);
-
         getListView().setItemsCanFocus(true);
-
-        //List view on Touch listener
-        getListView().setOnItemSelectedListener(new OnItemSelectedListener() {
-
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                view.setBackgroundColor(getResources().getColor(R.color.holo_blue_light));
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-        });
-
         getListView().setOnItemClickListener(new OnItemClickListener() {
-
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
                 openContextMenu(view);
             }
-
         });
 
         mCities = PreferencesManager.getInstance().getString(Utils.KEY_CITIES);

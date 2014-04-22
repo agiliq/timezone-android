@@ -76,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_color"
-                        android:textSize="10sp"
+                        android:textSize="12sp"
                         android:textStyle="normal" />
                 </LinearLayout>
 
@@ -105,6 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ruler"
+        android:paddingBottom="8dp"
         android:max="23" />
 
 </com.agiliq.timezoneconverter.core.CustomClockLinear>

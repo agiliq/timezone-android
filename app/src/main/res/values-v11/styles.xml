@@ -1,5 +1,11 @@
 <resources>
 
-    <style name="AppTheme" parent="@style/Theme.AppCompat" />
+    <style name="AppTheme" parent="@style/Theme.AppCompat" >
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+    </style>
+
+    <style name="ActionBarStyle" parent="Widget.AppCompat.Base.ActionBar">
+        <item name="android:background">@color/gray</item>
+    </style>
 
 </resources>
