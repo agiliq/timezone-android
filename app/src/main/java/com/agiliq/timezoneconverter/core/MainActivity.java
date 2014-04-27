@@ -54,7 +54,6 @@ public class MainActivity extends ActionBarListActivity {
         PreferencesManager.initializeInstance(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setTitle("");
         registerForContextMenu(getListView());
 
         if (PreferencesManager.getInstance().getString(Utils.KEY_CITIES) == null) {
