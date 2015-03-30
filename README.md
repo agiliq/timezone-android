@@ -1,7 +1,6 @@
-Time Zone Converter for Android
-===============================
+## Time Zone Converter for Android
 
-* More than 50K downloads *
+*More than 50K downloads*
 
 * Add time zones as cities.
 * Search for cities.
